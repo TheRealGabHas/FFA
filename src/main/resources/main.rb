@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+$plugin.get_logger.info("Ruby is running inside Paper!")
+java_import 'org.bukkit.Bukkit'
+java_import 'org.bukkit.event.player.PlayerJoinEvent'
+java_import 'org.bukkit.event.Listener'
+java_import 'org.bukkit.plugin.EventExecutor'
+
+CLASSES = ["listeners/PlayerJoinListener.rb"]
+CLASSES.each do |path|
+  $plugin.get_logger.info("Attempting to load: #{path}")
+  start = Time.now
+  stream = $plugin.get_resource(path)
+  if stream.nil?
+    $plugin.get_logger.severe("Failed to find resource: #{path}")
+    next
+  end
+
+  content_bytes = stream.read_all_bytes
+  stream.close
+
+  eval(String.from_java_bytes(content_bytes))
+  $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
+end
+
+
+player_join_listener_instance = PlayerJoinListener.new
+player_join_executor = PlayerJoinListener.executor($plugin)
+
+# Registering the event manually (Event class, Listener instance, Priority, Executor, Plugin)
+Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, player_join_listener_instance, org.bukkit.event.EventPriority::NORMAL, player_join_executor, $plugin)
+
+$plugin.get_logger.info("Successfully registered PlayerJoinEvent via Executor!")
