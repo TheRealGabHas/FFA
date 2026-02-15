@@ -24,10 +24,7 @@ CLASSES.each do |path|
 end
 
 
-player_join_listener_instance = PlayerJoinListener.new
-player_join_executor = PlayerJoinListener.executor($plugin)
-
 # Registering the event manually (Event class, Listener instance, Priority, Executor, Plugin)
-Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, player_join_listener_instance, org.bukkit.event.EventPriority::NORMAL, player_join_executor, $plugin)
+Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, PlayerJoinListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerJoinListener.executor($plugin), $plugin)
 
 $plugin.get_logger.info("Successfully registered PlayerJoinEvent via Executor!")
