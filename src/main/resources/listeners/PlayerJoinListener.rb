@@ -6,6 +6,11 @@ java_import 'org.bukkit.plugin.EventExecutor'
 java_import 'org.bukkit.inventory.ItemStack'
 java_import 'org.bukkit.Material'
 
+java_import 'net.kyori.adventure.text.Component'
+java_import 'net.kyori.adventure.text.format.NamedTextColor'
+java_import 'net.kyori.adventure.text.format.TextDecoration'
+
+
 class PlayerJoinListener
   include Listener
 
@@ -13,8 +18,13 @@ class PlayerJoinListener
     EventExecutor.impl do |_method, _listener, event|
       if event.is_a?(PlayerJoinEvent)
         player = event.get_player
-        player.send_message("§b[FFA] §7Welcome, §f#{player.get_name}!")
-        player.get_inventory.add_item(ItemStack.new(Material::DIAMOND))
+        message =
+          Component.text("[FFA] ")
+            .color(NamedTextColor::AQUA)
+            .append(Component.text("Welcome, ").color(NamedTextColor::GRAY))
+            .append(Component.text(player.get_name).color(NamedTextColor::WHITE).decorate(TextDecoration::BOLD))
+
+        player.send_message(message)
       end
     end
   end
