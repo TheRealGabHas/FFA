@@ -15,7 +15,6 @@ public final class FFA extends JavaPlugin {
         ScriptingContainer rbContainer = new ScriptingContainer();
 
         // Make the plugin accessible from Ruby as the `($)plugin` variable
-        rbContainer.put("plugin", this);
         rbContainer.put("$plugin", this);
 
         try (InputStream is = getResource("main.rb")) {
