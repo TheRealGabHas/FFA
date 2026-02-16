@@ -7,6 +7,14 @@ A Minecraft FFA plugin made in Ruby with PaperMC and JRuby.
 This plugin attempts to implement the Free for all (FFA) game mode.
 Players will be able to select a kit with the `/kit` command and go fight others in an arena.
 
+## Requirements
+
+The dependencies are listed in the `build.gradle` file. Here is the development tools utilized :
+- Java 23
+- JRuby 10.0.3.0
+
+ShadowJar is used in order to include JRuby and its dependencies in the final JAR.
+
 ## Commands
 
 Syntax:

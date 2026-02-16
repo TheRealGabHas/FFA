@@ -2,4 +2,4 @@ name: FFA
 version: '1.0-SNAPSHOT'
 main: fr.gabhas.FFA.FFA
 api-version: '1.21'
-description: A 1.21.5 Minecraft plugin for a FFA gamemode made with JRuby
+description: A 1.21.5 Minecraft plugin for a FFA game mode made with JRuby
