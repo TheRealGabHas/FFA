@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-java_import 'org.bukkit.event.Listener'
-java_import 'org.bukkit.event.block.BlockBreakEvent'
-java_import 'org.bukkit.plugin.EventExecutor'
+java_import org.bukkit.event.Listener
+java_import org.bukkit.event.block.BlockBreakEvent
+java_import org.bukkit.plugin.EventExecutor
 
-java_import 'net.kyori.adventure.text.Component'
-java_import 'net.kyori.adventure.text.format.NamedTextColor'
-java_import 'net.kyori.adventure.text.format.TextDecoration'
+java_import Java::net.kyori.adventure.text.Component
+java_import Java::net.kyori.adventure.text.format.NamedTextColor
+java_import Java::net.kyori.adventure.text.format.TextDecoration
 
 
 class BlockBreakListener

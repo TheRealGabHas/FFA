@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-$plugin.get_logger.info("Ruby is running inside Paper!")
-java_import 'org.bukkit.Bukkit'
-java_import 'org.bukkit.event.player.PlayerJoinEvent'
-java_import 'org.bukkit.event.Listener'
-java_import 'org.bukkit.plugin.EventExecutor'
+java_import org.bukkit.Bukkit
+java_import org.bukkit.event.player.PlayerJoinEvent
+java_import org.bukkit.event.Listener
+java_import org.bukkit.plugin.EventExecutor
 
-CLASSES = %w[listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb]
+
+CLASSES = %w[listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb commands/kitSelector.rb]
 CLASSES.each do |path|
   $plugin.get_logger.info("Attempting to load: #{path}")
   start = Time.now
