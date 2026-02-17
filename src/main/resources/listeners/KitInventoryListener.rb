@@ -2,6 +2,7 @@
 
 java_import org.bukkit.event.Listener
 java_import org.bukkit.event.inventory.InventoryClickEvent
+java_import org.bukkit.Sound
 
 java_import Java::net.kyori.adventure.text.Component
 
@@ -19,7 +20,8 @@ class KitInventoryListener
     slot = event.get_raw_slot
     return if slot >= holder.get_inventory.get_size  # Only handle the click in the displayed container, not player's inventory
 
-    player.send_message(Component.text("[#{event.get_inventory}] You clicked #{event.get_current_item} (slot #{slot})"))
+    player.send_message(Component.text("[#{event.get_inventory}] You selected the kit ##{slot + 1}"))
+    player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
   end
 
   def self.executor(plugin)

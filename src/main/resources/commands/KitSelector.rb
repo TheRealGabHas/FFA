@@ -6,6 +6,7 @@ java_import org.bukkit.entity.Player
 java_import org.bukkit.inventory.InventoryHolder
 java_import org.bukkit.inventory.ItemStack
 java_import org.bukkit.inventory.meta.ItemMeta
+java_import org.bukkit.inventory.ItemFlag
 java_import org.bukkit.Material
 
 java_import Java::io.papermc.paper.command.brigadier.BasicCommand
@@ -18,8 +19,11 @@ java_import Java::net.kyori.adventure.text.format.TextDecoration
 def build_item(material:, name:, lore:)
   item = ItemStack.new(material)
   meta = item.get_item_meta
+
   meta.item_name(name)
   meta.lore(lore)
+  meta.add_item_flags(ItemFlag::HIDE_ATTRIBUTES)
+
   item.set_item_meta(meta)
 
   item
@@ -36,15 +40,22 @@ class KitSelectorInventory
     items = [
       build_item(material: Material::IRON_SWORD,
                  name: Component.text("1 - Melee").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
-                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                 lore: ArrayList.new([Component.text("+ ").color(NamedTextColor::GREEN).append(Component.text("Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.text("+ ").color(NamedTextColor::GREEN).append(Component.text("Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.empty,
                                       Component.text("Click to select").color(NamedTextColor::YELLOW)])),
       build_item(material: Material::BOW,
                  name: Component.text("2 - Archer").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
-                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                 lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Bow").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Speed").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.empty,
                                       Component.text("Click to select").color(NamedTextColor::YELLOW)])),
       build_item(material: Material::FLINT_AND_STEEL,
                  name: Component.text("3 - Pyro").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
-                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                 lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Fire Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                      Component.empty,
                                       Component.text("Click to select").color(NamedTextColor::YELLOW)]))
     ]
     items.each_with_index do |item, i|
