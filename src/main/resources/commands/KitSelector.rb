@@ -1,13 +1,29 @@
 # frozen_string_literal: true
 
+java_import java.util.ArrayList
+
 java_import org.bukkit.entity.Player
 java_import org.bukkit.inventory.InventoryHolder
 java_import org.bukkit.inventory.ItemStack
+java_import org.bukkit.inventory.meta.ItemMeta
 java_import org.bukkit.Material
+
 java_import Java::io.papermc.paper.command.brigadier.BasicCommand
 
 java_import Java::net.kyori.adventure.text.Component
 java_import Java::net.kyori.adventure.text.format.NamedTextColor
+java_import Java::net.kyori.adventure.text.format.TextDecoration
+
+
+def build_item(material:, name:, lore:)
+  item = ItemStack.new(material)
+  meta = item.get_item_meta
+  meta.item_name(name)
+  meta.lore(lore)
+  item.set_item_meta(meta)
+
+  item
+end
 
 
 class KitSelectorInventory
@@ -18,9 +34,18 @@ class KitSelectorInventory
     @inventory = plugin.get_server.create_inventory(self, 9, inv_title)
 
     items = [
-      ItemStack.new(Material::DIAMOND),
-      ItemStack.new(Material::GRASS_BLOCK),
-      ItemStack.new(Material::NETHER_STAR)
+      build_item(material: Material::IRON_SWORD,
+                 name: Component.text("1 - Melee").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
+                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                                      Component.text("Click to select").color(NamedTextColor::YELLOW)])),
+      build_item(material: Material::BOW,
+                 name: Component.text("2 - Archer").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
+                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                                      Component.text("Click to select").color(NamedTextColor::YELLOW)])),
+      build_item(material: Material::FLINT_AND_STEEL,
+                 name: Component.text("3 - Pyro").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
+                 lore: ArrayList.new([Component.text("Primary combat kit").color(NamedTextColor::GRAY),
+                                      Component.text("Click to select").color(NamedTextColor::YELLOW)]))
     ]
     items.each_with_index do |item, i|
       @inventory.set_item(i, item)
@@ -47,7 +72,6 @@ class KitCommand
     if sender == executor && sender.is_a?(Player)
       # No argument provided, open the GUI selection menu
       if args.length < 1
-        sender.send_message(Component.text("This command can also be used like so: /kit <number>"))
         inv = KitSelectorInventory.new($plugin)
         sender.open_inventory(inv.get_inventory)
         return true
