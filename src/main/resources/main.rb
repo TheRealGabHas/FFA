@@ -9,14 +9,13 @@ java_import org.bukkit.plugin.EventExecutor
 java_import Java::io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 
 
-CLASSES = %w[listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb commands/KitSelector.rb listeners/KitInventoryListener.rb]
-CLASSES.each do |path|
+def load_ruby_file(path)
   $plugin.get_logger.info("Attempting to load: #{path}")
   start = Time.now
   stream = $plugin.get_resource(path)
   if stream.nil?
     $plugin.get_logger.severe("Failed to find resource: #{path}")
-    next
+    return
   end
 
   content_bytes = stream.read_all_bytes
@@ -24,6 +23,15 @@ CLASSES.each do |path|
 
   eval(String.from_java_bytes(content_bytes))
   $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
+end
+
+FILES = %w[utils/Scores.rb
+          listeners/PlayerJoinListener.rb
+          listeners/BlockBreakListener.rb
+          commands/KitSelector.rb
+          listeners/KitInventoryListener.rb]
+FILES.each do |path|
+  load_ruby_file(path)
 end
 
 
