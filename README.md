@@ -9,7 +9,7 @@ Players will be able to select a kit with the `/kit` command and go fight others
 
 ## Requirements
 
-The dependencies are listed in the `build.gradle` file. Here is the development tools utilized :
+The dependencies are listed in the `build.gradle` file. Here are the development tools utilized :
 - Java 23
 - JRuby 10.0.3.0
 
