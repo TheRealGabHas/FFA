@@ -10,7 +10,6 @@ java_import Java::io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 
 
 def load_ruby_file(path)
-  $plugin.get_logger.info("Attempting to load: #{path}")
   start = Time.now
   stream = $plugin.get_resource(path)
   if stream.nil?
@@ -25,11 +24,9 @@ def load_ruby_file(path)
   $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
 end
 
-FILES = %w[utils/Scores.rb
-          listeners/PlayerJoinListener.rb
-          listeners/BlockBreakListener.rb
-          commands/KitSelector.rb
-          listeners/KitInventoryListener.rb]
+FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
+          listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
+          commands/KitSelector.rb listeners/KitInventoryListener.rb]
 FILES.each do |path|
   load_ruby_file(path)
 end

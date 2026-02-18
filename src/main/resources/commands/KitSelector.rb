@@ -16,20 +16,6 @@ java_import Java::net.kyori.adventure.text.format.NamedTextColor
 java_import Java::net.kyori.adventure.text.format.TextDecoration
 
 
-def build_item(material:, name:, lore:)
-  item = ItemStack.new(material)
-  meta = item.get_item_meta
-
-  meta.item_name(name)
-  meta.lore(lore)
-  meta.add_item_flags(ItemFlag::HIDE_ATTRIBUTES)
-
-  item.set_item_meta(meta)
-
-  item
-end
-
-
 class KitSelectorInventory
   include InventoryHolder
 
@@ -38,20 +24,20 @@ class KitSelectorInventory
     @inventory = plugin.get_server.create_inventory(self, 9, inv_title)
 
     items = [
-      build_item(material: Material::IRON_SWORD,
+      ItemBuilder.build_item(material: Material::IRON_SWORD,
                  name: Component.text("1 - Melee").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
                  lore: ArrayList.new([Component.text("+ ").color(NamedTextColor::GREEN).append(Component.text("Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.text("+ ").color(NamedTextColor::GREEN).append(Component.text("Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.empty,
                                       Component.text("Click to select").color(NamedTextColor::YELLOW)])),
-      build_item(material: Material::BOW,
+      ItemBuilder.build_item(material: Material::BOW,
                  name: Component.text("2 - Archer").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
                  lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Bow").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Speed").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.empty,
                                       Component.text("Click to select").color(NamedTextColor::YELLOW)])),
-      build_item(material: Material::FLINT_AND_STEEL,
+      ItemBuilder.build_item(material: Material::FLINT_AND_STEEL,
                  name: Component.text("3 - Pyro").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
                  lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Fire Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
@@ -94,8 +80,19 @@ class KitCommand
         return false
       end
 
-      sender.send_message(Component.text("You selected the kit #{args[0].to_i}"))
-      true
+      kit_id = args[0].to_i
+      # A valid argument (number) was provided, attempt to give the kit
+      if Kits::VALID_KIT_IDS.include?(kit_id)
+        Score.set_player_score(sender, Score::CURRENT_KIT, kit_id)
+
+        sender.send_message(Component.text("[FFA] You selected the kit ##{kit_id}"))
+        sender.play_sound(sender.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
+        Kits.equip_selected_kit(index: kit_id, player: sender)
+        return true
+      else
+        sender.send_message(Component.text("[FFA] You selected an invalid kit ##{kit_id} (Valid kits:#{Kits::VALID_KIT_IDS - Kits::EASTER_EGGS_KIT_IDS})"))
+        return false
+      end
     end
   end
 
