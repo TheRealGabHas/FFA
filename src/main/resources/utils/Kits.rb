@@ -15,7 +15,7 @@ java_import Java::net.kyori.adventure.text.format.TextDecoration
 
 module Kits
 
-  VALID_KIT_IDS = [*(1..3), 999]
+  VALID_KIT_IDS = [*(1..4), 999]
   EASTER_EGGS_KIT_IDS = [999]
 
   def self.equip_selected_kit(index: 1, player:)
@@ -26,6 +26,8 @@ module Kits
       self.equip_archer_kit(player)
     when 3
       self.equip_pyro_kit(player)
+    when 4
+      self.equip_ninja_kit(player)
     else
       self.equip_default_kit(player)
     end
@@ -109,7 +111,25 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    speed_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0)
+    fire_resistance_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0)
+    player.add_potion_effect(fire_resistance_effect)
+  end
+
+  def self.equip_ninja_kit(player)
+    sword       = ItemBuilder.build_item(material: Material::GOLDEN_SWORD, unbreakable: true, enchants: [[Enchantment::SHARPNESS, 4]])
+    food        = ItemBuilder.build_item(material: Material::COOKED_BEEF, quantity: 32)
+
+    self.clear_effects(player)
+    self.clear_inventory(player)
+
+    inv = player.get_inventory
+    inv.set_held_item_slot(0)
+    inv.set_item(1, sword)
+    inv.set_item(2, food)
+
+    invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0)
+    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 1)
+    player.add_potion_effect(invisibility_effect)
     player.add_potion_effect(speed_effect)
   end
 

@@ -42,7 +42,14 @@ class KitSelectorInventory
                  lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Fire Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
                                       Component.empty,
-                                      Component.text("Click to select").color(NamedTextColor::YELLOW)]))
+                                      Component.text("Click to select").color(NamedTextColor::YELLOW)])),
+      ItemBuilder.build_item(material: Material::FEATHER,
+                             name: Component.text("4 - Ninja").color(NamedTextColor::GREEN).decorate(TextDecoration::BOLD),
+                             lore: ArrayList.new([Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Sword").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                                  Component.text("+").color(NamedTextColor::GREEN).append(Component.text(" Invisibility").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                                  Component.text("-").color(NamedTextColor::RED).append(Component.text(" Armor").color(NamedTextColor::WHITE)).decoration(TextDecoration::ITALIC, false),
+                                                  Component.empty,
+                                                  Component.text("Click to select").color(NamedTextColor::YELLOW)]))
     ]
     items.each_with_index do |item, i|
       @inventory.set_item(i, item)
