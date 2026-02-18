@@ -74,6 +74,12 @@ class KitCommand
     executor = source.get_executor
 
     if sender == executor && sender.is_a?(Player)
+      # If the player is in the arena/ in combat → Not allowed
+      if Score.get_player_score(sender, Score::IN_ARENA) > 0 || Score.get_player_score(sender, Score::IN_COMBAT) > 0
+        sender.send_message(Component.text("You can't select a kit while in combat/ arena").color(NamedTextColor::RED))
+        return false
+      end
+
       # No argument provided, open the GUI selection menu
       if args.length < 1
         inv = KitSelectorInventory.new($plugin)
