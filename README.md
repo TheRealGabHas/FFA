@@ -30,4 +30,6 @@ Open the kit selection GUI. If the `number` is provided, the player receive the 
 The Ruby code is located in the [`resources`](src/main/resources) directory.
 The [`main.rb`](src/main/resources/main.rb) script is loaded on plugin startup (by [`FFA.java`](src/main/java/fr/gabhas/FFA/FFA.java)).
 
-This script loads and register multiple listeners, commands and utility for the plugin.
+This script loads and register multiple listeners, commands and utility for the plugin. Since they are loaded in order 
+by the same file, something imported by a given file A (loaded before B) can be used in B without explicitly importing 
+it in B.
