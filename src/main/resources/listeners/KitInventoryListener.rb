@@ -3,6 +3,7 @@
 java_import org.bukkit.Bukkit
 java_import org.bukkit.event.Listener
 java_import org.bukkit.event.inventory.InventoryClickEvent
+java_import org.bukkit.event.inventory.ClickType
 java_import org.bukkit.Sound
 java_import org.bukkit.scoreboard.Scoreboard
 java_import org.bukkit.scoreboard.ScoreboardManager
@@ -36,6 +37,9 @@ class KitInventoryListener
   def self.executor(plugin)
     EventExecutor.impl do |_method, _listener, event|
       if event.is_a?(InventoryClickEvent)
+        # Prevent dropping items
+        event.set_cancelled(true) if event.get_click == ClickType::DROP || event.get_click == ClickType::CONTROL_DROP
+
         self.on_inventory_click(event)
       end
     end

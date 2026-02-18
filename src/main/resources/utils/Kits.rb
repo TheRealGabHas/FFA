@@ -61,6 +61,9 @@ module Kits
     inv.set_chestplate(chestplate)
     inv.set_leggings(leggings)
     inv.set_boots(boots)
+
+    player.update_inventory
+
   end
 
   def self.equip_archer_kit(player)
@@ -87,6 +90,8 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
+    player.update_inventory
+
     # Effect, Duration, Amplifier, Ambient, Show Particles, Show Icon
     speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0, false, false, true)
     player.add_potion_effect(speed_effect)
@@ -112,6 +117,8 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
+    player.update_inventory
+
     fire_resistance_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0, false, false, true)
     player.add_potion_effect(fire_resistance_effect)
   end
@@ -127,6 +134,8 @@ module Kits
     inv.set_held_item_slot(0)
     inv.set_item(1, sword)
     inv.set_item(2, food)
+
+    player.update_inventory
 
     # Invisibility particles are enabled
     invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0, false, true, true)
@@ -146,5 +155,8 @@ module Kits
     inv = player.get_inventory
     inv.set_held_item_slot(0)
     inv.set_item(0, egg)
+
+    player.update_inventory
+
   end
 end

@@ -2,6 +2,7 @@
 
 java_import org.bukkit.Bukkit
 java_import org.bukkit.event.player.PlayerJoinEvent
+java_import org.bukkit.event.player.PlayerDropItemEvent
 java_import org.bukkit.event.Listener
 java_import org.bukkit.event.inventory.InventoryClickEvent
 java_import org.bukkit.plugin.EventExecutor
@@ -26,7 +27,7 @@ end
 
 FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
-          commands/KitSelector.rb listeners/KitInventoryListener.rb]
+          commands/KitSelector.rb listeners/KitInventoryListener.rb listeners/DropItemListener.rb]
 FILES.each do |path|
   load_ruby_file(path)
 end
@@ -36,6 +37,7 @@ end
 Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, PlayerJoinListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerJoinListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(BlockBreakEvent.java_class, BlockBreakListener.new, org.bukkit.event.EventPriority::NORMAL, BlockBreakListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(InventoryClickEvent.java_class, KitInventoryListener.new, org.bukkit.event.EventPriority::NORMAL, KitInventoryListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropItemListener.new, org.bukkit.event.EventPriority::NORMAL, DropItemListener.executor($plugin), $plugin)
 
 # Registering the commands
 $plugin.getLifecycleManager.registerEventHandler(LifecycleEvents::COMMANDS) do |event|
