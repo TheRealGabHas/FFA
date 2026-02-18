@@ -87,6 +87,7 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
+    # Effect, Duration, Amplifier, Ambient, Show Particles, Show Icon
     speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0, false, false, true)
     player.add_potion_effect(speed_effect)
   end
