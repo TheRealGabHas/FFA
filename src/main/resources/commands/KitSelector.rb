@@ -97,7 +97,7 @@ class KitCommand
         Kits.equip_selected_kit(index: kit_id, player: sender)
         return true
       else
-        sender.send_message(Component.text("[FFA] You selected an invalid kit ##{kit_id} (Valid kits:#{Kits::VALID_KIT_IDS - Kits::EASTER_EGGS_KIT_IDS})"))
+        sender.send_message(Component.text("[FFA] You selected an invalid kit ##{kit_id} (Valid kits: #{(Kits::VALID_KIT_IDS - Kits::EASTER_EGGS_KIT_IDS).join(' ')})"))
         return false
       end
     end

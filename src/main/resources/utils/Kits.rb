@@ -87,7 +87,7 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0)
+    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0, false, false, true)
     player.add_potion_effect(speed_effect)
   end
 
@@ -111,7 +111,7 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    fire_resistance_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0)
+    fire_resistance_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0, false, false, true)
     player.add_potion_effect(fire_resistance_effect)
   end
 
@@ -127,8 +127,9 @@ module Kits
     inv.set_item(1, sword)
     inv.set_item(2, food)
 
-    invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0)
-    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 1)
+    # Invisibility particles are enabled
+    invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0, false, true, true)
+    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 1, false, false, true)
     player.add_potion_effect(invisibility_effect)
     player.add_potion_effect(speed_effect)
   end
