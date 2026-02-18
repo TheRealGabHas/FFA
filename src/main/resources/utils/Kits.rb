@@ -6,6 +6,8 @@ java_import org.bukkit.inventory.ItemStack
 java_import org.bukkit.inventory.meta.ItemMeta
 java_import org.bukkit.inventory.ItemFlag
 java_import org.bukkit.Material
+java_import org.bukkit.potion.PotionEffect
+java_import org.bukkit.potion.PotionEffectType
 
 java_import Java::net.kyori.adventure.text.Component
 java_import Java::net.kyori.adventure.text.format.NamedTextColor
@@ -30,7 +32,7 @@ module Kits
   end
 
   def self.clear_effects(player)
-    # TODO
+    player.clear_active_potion_effects
   end
 
   def self.clear_inventory(player)
@@ -83,7 +85,8 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    # TODO: Add speed effect
+    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0)
+    player.add_potion_effect(speed_effect)
   end
 
   def self.equip_pyro_kit(player)
@@ -106,7 +109,8 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    # TODO: Add fire resistance effect
+    speed_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0)
+    player.add_potion_effect(speed_effect)
   end
 
   def self.equip_default_kit(player)
