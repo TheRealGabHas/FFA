@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 java_import org.bukkit.Bukkit
+java_import org.bukkit.event.Listener
 java_import org.bukkit.event.player.PlayerJoinEvent
 java_import org.bukkit.event.player.PlayerDropItemEvent
-java_import org.bukkit.event.Listener
 java_import org.bukkit.event.inventory.InventoryClickEvent
+java_import org.bukkit.event.entity.EntityDamageEvent
+java_import org.bukkit.event.entity.PlayerDeathEvent
 java_import org.bukkit.plugin.EventExecutor
+java_import org.bukkit.GameRule
 
 java_import Java::io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 
@@ -28,7 +31,7 @@ end
 FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb listeners/KitInventoryListener.rb listeners/DropItemListener.rb
-          listeners/EntityDamageListener.rb]
+          listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb]
 FILES.each do |path|
   load_ruby_file(path)
 end
@@ -40,6 +43,7 @@ Bukkit.get_plugin_manager.register_event(BlockBreakEvent.java_class, BlockBreakL
 Bukkit.get_plugin_manager.register_event(InventoryClickEvent.java_class, KitInventoryListener.new, org.bukkit.event.EventPriority::NORMAL, KitInventoryListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropItemListener.new, org.bukkit.event.EventPriority::NORMAL, DropItemListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(EntityDamageEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(PlayerDeathEvent.java_class, PlayerDeathListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerDeathListener.executor($plugin), $plugin)
 $plugin.get_logger.info("Successfully registered listeners event")
 
 # Registering the commands
@@ -50,5 +54,9 @@ end
 
 # Initializing the scoreboard
 Score.init_scoreboard
-
 $plugin.get_logger.info("Successfully initialized the scoreboard")
+
+# Gamerules configuration
+Bukkit.get_worlds.each do |world|
+  world.set_game_rule(GameRule::DO_IMMEDIATE_RESPAWN, true)  # Instant respawn
+end
