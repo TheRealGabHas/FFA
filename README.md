@@ -1,4 +1,4 @@
-# FFA
+# gFFA
 
 A Minecraft FFA plugin made in Ruby with PaperMC and JRuby.
 
@@ -23,7 +23,15 @@ Syntax:
 
 ### `/kit (number)`
 
-Open the kit selection GUI. If the `number` is provided, the player receive the corresponding kit directly.
+Open the kit selection GUI. If the `number` is provided, the player receive the corresponding kit directly. This 
+command doesn't work if the sender is :
+- in the arena
+- in combat
+
+### `/spawn`
+
+Teleport the player to the spawn if they aren't in combat, therefore leaving the arena.
+
 
 ## Project structure
 
@@ -33,3 +41,7 @@ The [`main.rb`](src/main/resources/main.rb) script is loaded on plugin startup (
 This script loads and register multiple listeners, commands and utility for the plugin. Since they are loaded in order 
 by the same file, something imported by a given file A (loaded before B) can be used in B without explicitly importing 
 it in B.
+
+> [!NOTE]
+> This plugin was made to work well on a specific map, located in the `world` folder. I attempted to hardcode as little 
+> elements as possible so it won't be too hard to adapt it for another map.
