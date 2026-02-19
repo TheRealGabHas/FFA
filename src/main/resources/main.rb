@@ -30,7 +30,8 @@ end
 
 FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
-          commands/KitSelector.rb listeners/KitInventoryListener.rb listeners/DropItemListener.rb
+          commands/KitSelector.rb commands/SpawnCommand.rb
+          listeners/KitInventoryListener.rb listeners/DropItemListener.rb
           listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb]
 FILES.each do |path|
   load_ruby_file(path)
@@ -50,6 +51,7 @@ $plugin.get_logger.info("Successfully registered listeners event")
 $plugin.getLifecycleManager.registerEventHandler(LifecycleEvents::COMMANDS) do |event|
   event.registrar.register("kit", KitCommand.new)
   $plugin.get_logger.info("Successfully registered the /kit command")
+  event.registrar.register("spawn", SpawnCommand.new)
 end
 
 # Initializing the scoreboard
