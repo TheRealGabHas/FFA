@@ -30,7 +30,7 @@ class EntityDamageListener
 
       # Cancel damage if player is not in combat/ arena (meaning they should be in the spawn)
       if Score.get_player_score(player, Score::IN_ARENA) == 0 && Score.get_player_score(player, Score::IN_COMBAT) == 0
-        event.set_cancelled
+        event.set_cancelled(true)
       end
     end
   end
