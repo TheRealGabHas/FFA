@@ -25,7 +25,7 @@ class PlayerDeathListener
                                    .append(Component.text(killer_player.get_name).color(NamedTextColor::RED))
     else
       death_message = death_message.append(Component.text(dead_player.get_name).color(NamedTextColor::RED))
-                                   .append(Component.text(" died").color(NamedTextColor::RED))
+                                   .append(Component.text(" died").color(NamedTextColor::GRAY))
     end
 
     event.set_keep_inventory(true)  # Player keeps their stuff
