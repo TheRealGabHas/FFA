@@ -38,10 +38,15 @@ Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, PlayerJoinL
 Bukkit.get_plugin_manager.register_event(BlockBreakEvent.java_class, BlockBreakListener.new, org.bukkit.event.EventPriority::NORMAL, BlockBreakListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(InventoryClickEvent.java_class, KitInventoryListener.new, org.bukkit.event.EventPriority::NORMAL, KitInventoryListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropItemListener.new, org.bukkit.event.EventPriority::NORMAL, DropItemListener.executor($plugin), $plugin)
+$plugin.get_logger.info("Successfully registered listeners event")
 
 # Registering the commands
 $plugin.getLifecycleManager.registerEventHandler(LifecycleEvents::COMMANDS) do |event|
   event.registrar.register("kit", KitCommand.new)
+  $plugin.get_logger.info("Successfully registered the /kit command")
 end
 
-$plugin.get_logger.info("Successfully registered PlayerJoinEvent via Executor!")
+# Initializing the scoreboard
+Score.init_scoreboard
+
+$plugin.get_logger.info("Successfully initialized the scoreboard")
