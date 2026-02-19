@@ -27,7 +27,8 @@ end
 
 FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
-          commands/KitSelector.rb listeners/KitInventoryListener.rb listeners/DropItemListener.rb]
+          commands/KitSelector.rb listeners/KitInventoryListener.rb listeners/DropItemListener.rb
+          listeners/EntityDamageListener.rb]
 FILES.each do |path|
   load_ruby_file(path)
 end
@@ -38,6 +39,7 @@ Bukkit.get_plugin_manager.register_event(PlayerJoinEvent.java_class, PlayerJoinL
 Bukkit.get_plugin_manager.register_event(BlockBreakEvent.java_class, BlockBreakListener.new, org.bukkit.event.EventPriority::NORMAL, BlockBreakListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(InventoryClickEvent.java_class, KitInventoryListener.new, org.bukkit.event.EventPriority::NORMAL, KitInventoryListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropItemListener.new, org.bukkit.event.EventPriority::NORMAL, DropItemListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(EntityDamageEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
 $plugin.get_logger.info("Successfully registered listeners event")
 
 # Registering the commands
