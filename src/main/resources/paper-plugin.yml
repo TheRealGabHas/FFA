@@ -1,4 +1,4 @@
-name: FFA
+name: gFFA
 version: '1.0-SNAPSHOT'
 main: fr.gabhas.FFA.FFA
 api-version: '1.21.5'
