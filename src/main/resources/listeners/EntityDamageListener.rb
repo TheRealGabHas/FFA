@@ -33,13 +33,6 @@ class EntityDamageListener
         event.set_cancelled
       end
     end
-    if event.get_cause == EntityDamageEvent::DamageCause::FALL
-      if event.get_entity.is_a?(Player)
-        player = event.get_entity
-
-        event.set_cancelled(true)
-      end
-    end
   end
 
   def self.executor(plugin)
