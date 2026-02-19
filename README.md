@@ -43,5 +43,5 @@ by the same file, something imported by a given file A (loaded before B) can be 
 it in B.
 
 > [!NOTE]
-> This plugin was made to work well on a specific map, located in the `world` folder. I attempted to hardcode as little 
+> This plugin was made to work well on a specific map, located in the [`assets/world`](assets/world) folder. I attempted to hardcode as little 
 > elements as possible so it won't be too hard to adapt it for another map.
