@@ -20,11 +20,17 @@ module Score
     if scoreboard.get_objective(Score::CURRENT_KIT).nil?
       scoreboard.register_new_objective(Score::CURRENT_KIT, Criteria::DUMMY, Component.text(Score::CURRENT_KIT))
     end
-    if scoreboard.get_objective(IN_ARENA).nil?
+    if scoreboard.get_objective(Score::IN_ARENA).nil?
       scoreboard.register_new_objective(Score::IN_ARENA, Criteria::DUMMY, Component.text(Score::IN_ARENA))
     end
-    if scoreboard.get_objective(IN_COMBAT).nil?
+    if scoreboard.get_objective(Score::IN_COMBAT).nil?
       scoreboard.register_new_objective(Score::IN_COMBAT, Criteria::DUMMY, Component.text(Score::IN_COMBAT))
+    end
+    if scoreboard.get_objective(Score::LIFETIME_KILL_COUNT).nil?
+      scoreboard.register_new_objective(Score::LIFETIME_KILL_COUNT, Criteria::PLAYER_KILL_COUNT, Score::LIFETIME_KILL_COUNT)
+    end
+    if scoreboard.get_objective(Score::STREAK_KILL_COUNT).nil?
+      scoreboard.register_new_objective(Score::STREAK_KILL_COUNT, Criteria::PLAYER_KILL_COUNT, Score::STREAK_KILL_COUNT)
     end
   end
 
