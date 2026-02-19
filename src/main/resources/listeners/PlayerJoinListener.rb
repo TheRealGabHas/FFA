@@ -6,6 +6,7 @@ java_import org.bukkit.plugin.EventExecutor
 java_import org.bukkit.inventory.ItemStack
 java_import org.bukkit.Material
 java_import org.bukkit.Location
+java_import org.bukkit.Sound
 
 java_import Java::net.kyori.adventure.text.Component
 java_import Java::net.kyori.adventure.text.format.NamedTextColor
