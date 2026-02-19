@@ -33,9 +33,7 @@ FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
           listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb]
-FILES.each do |path|
-  load_ruby_file(path)
-end
+FILES.each { |path| load_ruby_file(path) }
 
 
 # Registering the event manually (Event class, Listener instance, Priority, Executor, Plugin)
