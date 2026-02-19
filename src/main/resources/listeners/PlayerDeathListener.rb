@@ -19,7 +19,7 @@ class PlayerDeathListener
     killer_player = dead_player.get_killer
     death_message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
 
-    if killer_player != nil && killer_player.method_defined?(:get_name)
+    if killer_player != nil && killer_player.is_a?(Player)
       death_message = death_message.append(Component.text(dead_player.get_name).color(NamedTextColor::RED))
                                    .append(Component.text(" was slain by ").color(NamedTextColor::GRAY))
                                    .append(Component.text(killer_player.get_name).color(NamedTextColor::RED))
