@@ -18,7 +18,7 @@ class PlayerJoinListener
   def self.handle_rejoin(player)
     spawn_location = Location.new(player.get_world, 0.5, 1.0, 5.5, 180, 0)
 
-    player.set_respawn_location(spawn_location)  # FIXME: not considered as a safe respawn location
+    player.set_respawn_location(spawn_location, true)
     player.teleport_async(spawn_location)
     player.set_game_mode(GameMode::ADVENTURE)
     Score.set_player_score(player, Score::IN_ARENA, 0)  # Player is no longer in the arena
