@@ -75,8 +75,14 @@ class KitCommand
 
     if sender == executor && sender.is_a?(Player)
       # If the player is in the arena/ in combat → Not allowed
+      # This part of code is duplicated within the `Kits.equip_selected_kit` method to prevent the GUI from even opening
+      # when the player is in an unallowed state
+      # It's not mandatory to maintain this duplication, I just think it's better UX
       if Score.get_player_score(sender, Score::IN_ARENA) > 0 || Score.get_player_score(sender, Score::IN_COMBAT) > 0
-        sender.send_message(Component.text("You can't select a kit while in combat/ arena").color(NamedTextColor::RED))
+        message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                           .append(Component.text("You can't select a kit while in combat/ arena").color(NamedTextColor::RED))
+        sender.send_message(message)
+        sender.play_sound(sender.get_location, Sound::BLOCK_NOTE_BLOCK_SNARE, 1.0, 1.0)
         return false
       end
 
@@ -95,17 +101,7 @@ class KitCommand
 
       kit_id = args[0].to_i
       # A valid argument (number) was provided, attempt to give the kit
-      if Kits::VALID_KIT_IDS.include?(kit_id)
-        Score.set_player_score(sender, Score::CURRENT_KIT, kit_id)
-
-        sender.send_message(Component.text("[FFA] You selected the kit ##{kit_id}"))
-        sender.play_sound(sender.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
-        Kits.equip_selected_kit(index: kit_id, player: sender)
-        return true
-      else
-        sender.send_message(Component.text("[FFA] You selected an invalid kit ##{kit_id} (Valid kits: #{(Kits::VALID_KIT_IDS - Kits::EASTER_EGGS_KIT_IDS).join(' ')})"))
-        return false
-      end
+      Kits.equip_selected_kit(index: kit_id, player: sender)
     end
   end
 

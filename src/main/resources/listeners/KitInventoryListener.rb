@@ -25,10 +25,6 @@ class KitInventoryListener
     slot = event.get_raw_slot
     return if slot >= holder.get_inventory.get_size  # Only handle the click in the displayed container, not player's inventory
 
-    Score.set_player_score(player, Score::CURRENT_KIT, slot + 1)
-
-    player.send_message(Component.text("[FFA] You selected the kit ##{slot + 1}"))
-    player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
     Kits.equip_selected_kit(index: slot + 1, player: player)
 
     event.get_inventory.close

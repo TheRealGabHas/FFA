@@ -19,6 +19,36 @@ module Kits
   EASTER_EGGS_KIT_IDS = [999]
 
   def self.equip_selected_kit(index: 1, player:)
+    # Player is in the arena/ in combat → Not allowed
+    if Score.get_player_score(player, Score::IN_ARENA) > 0 || Score.get_player_score(player, Score::IN_COMBAT) > 0
+      message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                         .append(Component.text("You can't select a kit while in combat/ arena").color(NamedTextColor::RED))
+      player.send_message(message)
+      player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_SNARE, 1.0, 1.0)
+      return false
+    end
+
+    # Invalid kit ID provided
+    unless VALID_KIT_IDS.include?(index)
+      message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                         .append(Component.text("You selected an invalid kit: ").color(NamedTextColor::GRAY))
+                         .append(Component.text("#{index} ").color(NamedTextColor::RED))
+                         .append(Component.text("(Valid kits: ").color(NamedTextColor::GRAY))
+                         .append(Component.text((Kits::VALID_KIT_IDS - Kits::EASTER_EGGS_KIT_IDS).join(' ')).color(NamedTextColor::AQUA))
+                         .append(Component.text(")").color(NamedTextColor::GRAY))
+      player.send_message(message)
+      player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_SNARE, 1.0, 1.0)
+      return false
+    end
+
+    message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                       .append(Component.text("You selected the kit ").color(NamedTextColor::GRAY))
+                       .append(Component.text("#{index}").color(NamedTextColor::AQUA))
+    player.send_message(message)
+    player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
+
+    Score.set_player_score(player, Score::CURRENT_KIT, index)
+
     case index
     when 1
       self.equip_melee_kit(player)
@@ -31,6 +61,10 @@ module Kits
     else
       self.equip_default_kit(player)
     end
+
+    player.update_inventory
+
+    return true
   end
 
   def self.clear_effects(player)
@@ -40,6 +74,7 @@ module Kits
   def self.clear_inventory(player)
     inv = player.get_inventory
     inv.clear
+    player.update_inventory
   end
 
   def self.equip_melee_kit(player)
@@ -61,8 +96,6 @@ module Kits
     inv.set_chestplate(chestplate)
     inv.set_leggings(leggings)
     inv.set_boots(boots)
-
-    player.update_inventory
 
   end
 
@@ -90,8 +123,6 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    player.update_inventory
-
     # Effect, Duration, Amplifier, Ambient, Show Particles, Show Icon
     speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0, false, false, true)
     player.add_potion_effect(speed_effect)
@@ -117,8 +148,6 @@ module Kits
     inv.set_leggings(leggings)
     inv.set_boots(boots)
 
-    player.update_inventory
-
     fire_resistance_effect = PotionEffect.new(PotionEffectType::FIRE_RESISTANCE, -1, 0, false, false, true)
     player.add_potion_effect(fire_resistance_effect)
   end
@@ -134,8 +163,6 @@ module Kits
     inv.set_held_item_slot(0)
     inv.set_item(1, sword)
     inv.set_item(2, food)
-
-    player.update_inventory
 
     # Invisibility particles are enabled
     invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0, false, true, true)
@@ -155,8 +182,6 @@ module Kits
     inv = player.get_inventory
     inv.set_held_item_slot(0)
     inv.set_item(0, egg)
-
-    player.update_inventory
 
   end
 end
