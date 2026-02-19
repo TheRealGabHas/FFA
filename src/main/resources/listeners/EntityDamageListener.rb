@@ -2,7 +2,9 @@
 
 java_import org.bukkit.event.Listener
 java_import org.bukkit.event.entity.EntityDamageEvent
+java_import org.bukkit.event.entity.EntityDamageByEntityEvent
 java_import org.bukkit.entity.Player
+java_import org.bukkit.entity.Projectile
 java_import org.bukkit.plugin.EventExecutor
 
 
@@ -35,9 +37,43 @@ class EntityDamageListener
     end
   end
 
+  def self.handle_entity_damage_by_entity(event)
+    victim = event.get_entity
+    damager = event.get_damager
+
+    if damager.is_a?(Projectile)
+      projectile = event.get_damager.copy
+      damager = projectile.get_shooter
+    end
+
+    # Victim is a player and damaged from outside the arena
+    if victim.is_a?(Player) && Score.get_player_score(victim, Score::IN_ARENA) == 0
+      event.set_cancelled(true)
+      return
+    end
+
+    # Damager is outside the arena
+    if damager.is_a?(Player) && Score.get_player_score(damager, Score::IN_ARENA) == 0
+      event.set_cancelled(true)
+      return
+    end
+
+    # Player damaged by another player (maybe via a projectile)
+    # At this stage it's safe to assume that if both entities are player, they are bot in the arena
+    if victim.is_a?(Player) && damager.is_a?(Player)
+      $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.get_name} (start of combat)")
+      DataStore.start_combat(victim)
+      DataStore.start_combat(damager)
+    else
+      $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.class} (no combat started)")
+    end
+  end
+
   def self.executor(plugin)
     EventExecutor.impl do |_method, _listener, event|
-      if event.is_a?(EntityDamageEvent)
+      if event.is_a?(EntityDamageByEntityEvent)
+        self.handle_entity_damage_by_entity(event)
+      elsif event.is_a?(EntityDamageEvent)
         self.handle_entity_damage(event)
       end
     end

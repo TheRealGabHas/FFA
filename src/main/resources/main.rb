@@ -10,6 +10,8 @@ java_import org.bukkit.event.entity.PlayerDeathEvent
 java_import org.bukkit.plugin.EventExecutor
 java_import org.bukkit.GameRule
 
+java_import java.lang.Runnable
+
 java_import Java::io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 
 
@@ -28,7 +30,7 @@ def load_ruby_file(path)
   $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
 end
 
-FILES = %w[utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
+FILES = %w[utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
@@ -42,6 +44,7 @@ Bukkit.get_plugin_manager.register_event(BlockBreakEvent.java_class, BlockBreakL
 Bukkit.get_plugin_manager.register_event(InventoryClickEvent.java_class, KitInventoryListener.new, org.bukkit.event.EventPriority::NORMAL, KitInventoryListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropItemListener.new, org.bukkit.event.EventPriority::NORMAL, DropItemListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(EntityDamageEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(EntityDamageByEntityEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDeathEvent.java_class, PlayerDeathListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerDeathListener.executor($plugin), $plugin)
 $plugin.get_logger.info("Successfully registered listeners event")
 
@@ -60,3 +63,8 @@ $plugin.get_logger.info("Successfully initialized the scoreboard")
 Bukkit.get_worlds.each do |world|
   world.set_game_rule(GameRule::DO_IMMEDIATE_RESPAWN, true)  # Instant respawn
 end
+
+# Register a new redundant task
+# Every 5 ticks (0.25 sec), updates the combat state of each player
+combat_update_task = Runnable.impl { DataStore.update_combat_states }
+Bukkit.get_scheduler.run_task_timer($plugin, combat_update_task, 0, 5)
