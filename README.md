@@ -46,4 +46,4 @@ it in B.
 > This plugin was made to work well on a specific map, located in the [`assets/world`](assets/world) folder. I attempted to hardcode as little 
 > elements as possible so it won't be too hard to adapt it for another map.
 > Currently, the spawn location is hardcoded in the [`/spawn`](src/main/resources/commands/SpawnCommand.rb) command and 
-> in the [`PlayerDeathListener`](src/main/resources/listeners/PlayerDeathListener.rb)
+> in the [`PlayerJoinListener`](src/main/resources/listeners/PlayerJoinListener.rb)
