@@ -8,7 +8,6 @@ java_import org.bukkit.entity.Player
 
 java_import Java::net.kyori.adventure.text.Component
 java_import Java::net.kyori.adventure.text.format.NamedTextColor
-java_import Java::net.kyori.adventure.text.format.TextDecoration
 
 
 class PlayerDeathListener
