@@ -34,7 +34,8 @@ FILES = %w[utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/PlayerQuitListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
-          listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb]
+          listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb
+          listeners/PlayerPostRespawnListener.rb]
 FILES.each { |path| load_ruby_file(path) }
 
 
@@ -47,6 +48,7 @@ Bukkit.get_plugin_manager.register_event(EntityDamageEvent.java_class, EntityDam
 Bukkit.get_plugin_manager.register_event(EntityDamageByEntityEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDeathEvent.java_class, PlayerDeathListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerDeathListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerQuitEvent.java_class, PlayerQuitListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerQuitListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(PlayerPostRespawnEvent.java_class, PlayerPostRespawnListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerPostRespawnListener.executor($plugin), $plugin)
 $plugin.get_logger.info("Successfully registered listeners event")
 
 # Registering the commands

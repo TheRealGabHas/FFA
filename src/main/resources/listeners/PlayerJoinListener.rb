@@ -28,13 +28,23 @@ class PlayerJoinListener
 
     # If the player disconnected during a combat
     if Score.get_player_score(player, Score::IN_COMBAT) > 0
+      player.set_health(0)  # Kill the player
       warning_message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
                                  .append(Component.text("You disconnected during a combat, so you died instead").color(NamedTextColor::RED))
 
       Score.set_player_score(player, Score::IN_COMBAT, 0)
       player.send_message(warning_message)
       player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_BELL, 1.0, 1.0)
+    else
+      # Reequip the current kit so it reset (potion effect, amount of food...)
+      # If the player never selected a kit/ has an invalid one → skip
+      current_kit = Score.get_player_score(player, Score::CURRENT_KIT)
+      if Kits::VALID_KIT_IDS.include?(current_kit)
+        Kits.equip_selected_kit(index: current_kit, player: player, show_message: false)
+      end
     end
+
+
   end
 
   def self.executor(plugin)

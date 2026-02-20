@@ -18,7 +18,7 @@ module Kits
   VALID_KIT_IDS = [*(1..4), 999]
   EASTER_EGGS_KIT_IDS = [999]
 
-  def self.equip_selected_kit(index: 1, player:)
+  def self.equip_selected_kit(index: 1, player:, show_message: true)
     # Player is in the arena/ in combat → Not allowed
     if Score.get_player_score(player, Score::IN_ARENA) > 0 || Score.get_player_score(player, Score::IN_COMBAT) > 0
       message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
@@ -41,10 +41,12 @@ module Kits
       return false
     end
 
-    message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
-                       .append(Component.text("You selected the kit ").color(NamedTextColor::GRAY))
-                       .append(Component.text("#{index}").color(NamedTextColor::AQUA))
-    player.send_message(message)
+    if show_message
+      message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                         .append(Component.text("You selected the kit ").color(NamedTextColor::GRAY))
+                         .append(Component.text("#{index}").color(NamedTextColor::AQUA))
+      player.send_message(message)
+    end
     player.play_sound(player.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
 
     Score.set_player_score(player, Score::CURRENT_KIT, index)
