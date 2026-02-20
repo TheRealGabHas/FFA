@@ -45,6 +45,10 @@ module DataStore
 
   def self.update_combat_states
     @combat_states.each do |_uuid, combat_state|
+      # Don't update the combat duration if the player has disconnected
+      # This allows for some consequences when the player reconnects after leaving during a fight
+      next unless combat_state.instance.is_connected
+
       # Combat is over
       combat_duration = Time.now - combat_state.start_time
       if combat_duration >= DataStore::COMBAT_DURATION
