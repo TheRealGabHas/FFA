@@ -19,6 +19,7 @@ module Score
   LIFETIME_KILL_COUNT = "lifetimeKillCount"
   STREAK_KILL_COUNT = "streakKillCount"
   PLAYER_HEALTH = "playerHealth"
+  DEATH_COUNT = "deathCount"
 
   def self.init_scoreboard
     scoreboard = Bukkit.get_scoreboard_manager.get_main_scoreboard
@@ -45,6 +46,9 @@ module Score
       display_style = Style.style.color(NamedTextColor::RED).decorate(TextDecoration::BOLD).build
       number_format = NumberFormat.styled(display_style)
       health_objective.number_format(number_format)
+    end
+    if scoreboard.get_objective(Score::DEATH_COUNT).nil?
+      scoreboard.register_new_objective(Score::DEATH_COUNT, Criteria::DEATH_COUNT, Score::DEATH_COUNT)
     end
   end
 
