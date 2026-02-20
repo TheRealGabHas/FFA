@@ -32,6 +32,8 @@ class PlayerDeathListener
                                       .append(Component.text(killer_killstreak).color(NamedTextColor::RED))
         Bukkit.broadcast(killstreak_message)
       end
+
+      Utils.apply_kill_reward(killer_player)
     else
       death_message = death_message.append(Component.text(dead_player.get_name).color(NamedTextColor::RED))
                                    .append(Component.text(" died").color(NamedTextColor::GRAY))

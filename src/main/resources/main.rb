@@ -30,7 +30,7 @@ def load_ruby_file(path)
   $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
 end
 
-FILES = %w[utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
+FILES = %w[utils/Utils.rb utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
           listeners/PlayerJoinListener.rb listeners/PlayerQuitListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
