@@ -4,8 +4,12 @@ java_import org.bukkit.Bukkit
 java_import org.bukkit.scoreboard.Scoreboard
 java_import org.bukkit.scoreboard.ScoreboardManager
 java_import org.bukkit.scoreboard.Criteria
+java_import org.bukkit.scoreboard.DisplaySlot
 
+java_import Java::io.papermc.paper.scoreboard.numbers.NumberFormat
 java_import Java::net.kyori.adventure.text.Component
+java_import Java::net.kyori.adventure.text.format.NamedTextColor
+java_import Java::net.kyori.adventure.text.format.Style
 
 
 module Score
@@ -14,6 +18,7 @@ module Score
   IN_COMBAT = "inCombat"
   LIFETIME_KILL_COUNT = "lifetimeKillCount"
   STREAK_KILL_COUNT = "streakKillCount"
+  PLAYER_HEALTH = "playerHealth"
 
   def self.init_scoreboard
     scoreboard = Bukkit.get_scoreboard_manager.get_main_scoreboard
@@ -31,6 +36,15 @@ module Score
     end
     if scoreboard.get_objective(Score::STREAK_KILL_COUNT).nil?
       scoreboard.register_new_objective(Score::STREAK_KILL_COUNT, Criteria::PLAYER_KILL_COUNT, Score::STREAK_KILL_COUNT)
+    end
+    if scoreboard.get_objective(Score::PLAYER_HEALTH).nil?
+      scoreboard.register_new_objective(Score::PLAYER_HEALTH, Criteria::HEALTH, Component.text("\u2764").color(NamedTextColor::RED))
+      health_objective = scoreboard.get_objective(Score::PLAYER_HEALTH)
+      health_objective.set_display_slot(DisplaySlot::BELOW_NAME)
+
+      display_style = Style.style.color(NamedTextColor::RED).decorate(TextDecoration::BOLD).build
+      number_format = NumberFormat.styled(display_style)
+      health_objective.number_format(number_format)
     end
   end
 
