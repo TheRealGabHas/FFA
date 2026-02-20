@@ -22,6 +22,16 @@ class PlayerDeathListener
       death_message = death_message.append(Component.text(dead_player.get_name).color(NamedTextColor::RED))
                                    .append(Component.text(" was slain by ").color(NamedTextColor::GRAY))
                                    .append(Component.text(killer_player.get_name).color(NamedTextColor::RED))
+
+      # + 1 since the kill is registered in scoreboard after this event
+      killer_killstreak = Score.get_player_score(killer_player, Score::STREAK_KILL_COUNT) + 1
+      if killer_killstreak > 4 && killer_killstreak % 5 == 0
+        killstreak_message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                                      .append(Component.text(killer_player.get_name).color(NamedTextColor::RED))
+                                      .append(Component.text(" is on a killstreak of ").color(NamedTextColor::GRAY))
+                                      .append(Component.text(killer_killstreak).color(NamedTextColor::RED))
+        Bukkit.broadcast(killstreak_message)
+      end
     else
       death_message = death_message.append(Component.text(dead_player.get_name).color(NamedTextColor::RED))
                                    .append(Component.text(" died").color(NamedTextColor::GRAY))
