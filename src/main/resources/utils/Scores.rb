@@ -41,8 +41,6 @@ module Score
       if scoreboard.get_objective(score_name).nil?
         $plugin.get_logger.warning("Couldn't set the score #{score_name} for #{player.get_name} (score doesn't exist)")
         return false
-      else
-        return true
       end
     end
     return true

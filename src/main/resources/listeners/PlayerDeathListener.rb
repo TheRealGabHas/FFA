@@ -36,7 +36,16 @@ class PlayerDeathListener
 
     # Leaving combat and arena (as the player should not respawn IN the arena)
     Score.set_player_score(dead_player, Score::IN_ARENA, 0)
-    Score.set_player_score(dead_player, Score::IN_COMBAT, 0)
+    DataStore.end_combat(dead_player)
+
+    # Reseting the killstreak
+    killstreak = Score.get_player_score(dead_player, Score::STREAK_KILL_COUNT)
+    if killstreak > 0
+      dead_player.send_message(Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                                        .append(Component.text("You reached a killstreak of ").color(NamedTextColor::GRAY))
+                                        .append(Component.text(killstreak).color(NamedTextColor::AQUA)))
+    end
+    Score.set_player_score(dead_player, Score::STREAK_KILL_COUNT, 0)
   end
 
   def self.executor(plugin)
