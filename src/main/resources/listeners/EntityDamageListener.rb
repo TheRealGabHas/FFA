@@ -59,7 +59,7 @@ class EntityDamageListener
     end
 
     # Player damaged by another player (maybe via a projectile)
-    # At this stage it's safe to assume that if both entities are player, they are bot in the arena
+    # At this stage it's safe to assume that if both entities are player, they are both in the arena
     if victim.is_a?(Player) && damager.is_a?(Player)
       $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.get_name} (start of combat)")
       DataStore.start_combat(victim)
