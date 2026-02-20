@@ -42,8 +42,8 @@ class PlayerJoinListener
       if event.is_a?(PlayerJoinEvent)
         player = event.get_player
         join_message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
-                                .append(Component.text("Welcome ").color(NamedTextColor::GRAY))
-                                .append(Component.text(player.get_name).color(NamedTextColor::WHITE).decorate(TextDecoration::BOLD))
+                                .append(Component.text("+ ").color(NamedTextColor::GREEN))
+                                .append(Component.text(player.get_name).color(NamedTextColor::GRAY))
         event.join_message(join_message)
         self.handle_rejoin(player)
       end
