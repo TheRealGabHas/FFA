@@ -64,7 +64,7 @@ class EntityDamageListener
       $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.get_name} (start of combat)")
       DataStore.start_combat(victim)
       DataStore.start_combat(damager)
-    else
+    elsif victim.is_a?(Player) && !damager.is_a?(Player)
       $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.class} (no combat started)")
     end
   end
