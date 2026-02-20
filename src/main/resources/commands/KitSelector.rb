@@ -95,7 +95,12 @@ class KitCommand
 
       # Raise an error if the provided argument is not a number
       unless args[0].match?(/\A\d+\z/)
-        sender.send_message(Component.text("The first argument must be a number, not a string"))
+        message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                           .append(Component.text("Usage: ").color(NamedTextColor::GRAY))
+                           .append(Component.text("/kit <number>").color(NamedTextColor::AQUA))
+                           .append(Component.text(" (example: /kit 2)").color(NamedTextColor::GRAY).decorate(TextDecoration::ITALIC))
+        sender.send_message(message)
+        sender.play_sound(sender.get_location, Sound::BLOCK_NOTE_BLOCK_SNARE, 1.0, 1.0)
         return false
       end
 
