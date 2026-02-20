@@ -31,7 +31,7 @@ def load_ruby_file(path)
 end
 
 FILES = %w[utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
-          listeners/PlayerJoinListener.rb listeners/BlockBreakListener.rb
+          listeners/PlayerJoinListener.rb listeners/PlayerQuitListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
           listeners/EntityDamageListener.rb listeners/PlayerDeathListener.rb]
@@ -46,13 +46,15 @@ Bukkit.get_plugin_manager.register_event(PlayerDropItemEvent.java_class, DropIte
 Bukkit.get_plugin_manager.register_event(EntityDamageEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(EntityDamageByEntityEvent.java_class, EntityDamageListener.new, org.bukkit.event.EventPriority::NORMAL, EntityDamageListener.executor($plugin), $plugin)
 Bukkit.get_plugin_manager.register_event(PlayerDeathEvent.java_class, PlayerDeathListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerDeathListener.executor($plugin), $plugin)
+Bukkit.get_plugin_manager.register_event(PlayerQuitEvent.java_class, PlayerQuitListener.new, org.bukkit.event.EventPriority::NORMAL, PlayerQuitListener.executor($plugin), $plugin)
 $plugin.get_logger.info("Successfully registered listeners event")
 
 # Registering the commands
 $plugin.getLifecycleManager.registerEventHandler(LifecycleEvents::COMMANDS) do |event|
   event.registrar.register("kit", KitCommand.new)
-  $plugin.get_logger.info("Successfully registered the /kit command")
+  $plugin.get_logger.info("Successfully registered command: /kit")
   event.registrar.register("spawn", SpawnCommand.new)
+  $plugin.get_logger.info("Successfully registered command: /spawn")
 end
 
 # Initializing the scoreboard
