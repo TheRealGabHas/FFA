@@ -13,7 +13,7 @@ module DataStore
     end
   end
 
-  COMBAT_DURATION = 5  # Combat ends 5 seconds after the last damage taken
+  COMBAT_DURATION = 10  # Combat ends 10 seconds after the last hit was inflicted
   @combat_states = {}
 
   def self.start_combat(player)
