@@ -24,6 +24,9 @@ class SpawnCommand
         sender.send_message(message)
         sender.play_sound(sender.get_location, Sound::BLOCK_NOTE_BLOCK_PLING, 1.0, 1.0)
 
+        sender.set_health(sender.get_max_health)
+        sender.set_food_level(20)
+
         Score.set_player_score(sender, Score::IN_ARENA, 0)  # Player is no longer in the arena
       else
         message = message.append(Component.text("You can't teleport to spawn while in combat").color(NamedTextColor::RED))

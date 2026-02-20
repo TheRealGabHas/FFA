@@ -44,6 +44,8 @@ class PlayerJoinListener
       end
     end
 
+    player.set_health(player.get_max_health)
+    player.set_food_level(20)
 
   end
 
