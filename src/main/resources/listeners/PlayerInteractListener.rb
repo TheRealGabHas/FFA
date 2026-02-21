@@ -9,28 +9,6 @@ java_import org.bukkit.event.block.Action
 java_import org.bukkit.block.Block
 java_import org.bukkit.Material
 
-# ACACIA_TRAPDOOR(-1, TrapDoor.class),
-#                     644 BAMBOO_TRAPDOOR(-1, TrapDoor.class),
-#                     671 BIRCH_TRAPDOOR(-1, TrapDoor.class),
-#                     774 CHERRY_TRAPDOOR(-1, TrapDoor.class),
-#                     818 COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     845 CRIMSON_TRAPDOOR(-1, TrapDoor.class),
-#                     885 DARK_OAK_TRAPDOOR(-1, TrapDoor.class),
-#                     966 EXPOSED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1050 IRON_TRAPDOOR(-1, TrapDoor.class),
-#                     1067 JUNGLE_TRAPDOOR(-1, TrapDoor.class),
-#                     1163 MANGROVE_TRAPDOOR(-1, TrapDoor.class),
-#                     1216 OAK_TRAPDOOR(-1, TrapDoor.class),
-#                     1245 OXIDIZED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1267 PALE_OAK_TRAPDOOR(-1, TrapDoor.class),
-#                     1513 SPRUCE_TRAPDOOR(-1, TrapDoor.class),
-#                     1609 WARPED_TRAPDOOR(-1, TrapDoor.class),
-#                     1620 WAXED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1629 WAXED_EXPOSED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1638 WAXED_OXIDIZED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1647 WAXED_WEATHERED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     1656 WEATHERED_COPPER_TRAPDOOR(-1, TrapDoor.class),
-#                     2036 LEGACY_IRON_TRAPDOOR(167, org.bukkit.material.TrapDoor.class)
 
 class PlayerInteractListener
   include Listener
