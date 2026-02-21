@@ -39,15 +39,6 @@ module Score
     if scoreboard.get_objective(Score::STREAK_KILL_COUNT).nil?
       scoreboard.register_new_objective(Score::STREAK_KILL_COUNT, Criteria::PLAYER_KILL_COUNT, Score::STREAK_KILL_COUNT)
     end
-    if scoreboard.get_objective(Score::PLAYER_HEALTH).nil?
-      scoreboard.register_new_objective(Score::PLAYER_HEALTH, Criteria::HEALTH, Component.text("\u2764").color(NamedTextColor::RED))
-      health_objective = scoreboard.get_objective(Score::PLAYER_HEALTH)
-      health_objective.set_display_slot(DisplaySlot::BELOW_NAME)
-
-      display_style = Style.style.color(NamedTextColor::RED).decorate(TextDecoration::BOLD).build
-      number_format = NumberFormat.styled(display_style)
-      health_objective.number_format(number_format)
-    end
     if scoreboard.get_objective(Score::DEATH_COUNT).nil?
       scoreboard.register_new_objective(Score::DEATH_COUNT, Criteria::DEATH_COUNT, Score::DEATH_COUNT)
     end

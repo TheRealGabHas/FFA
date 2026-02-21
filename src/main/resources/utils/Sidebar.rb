@@ -33,6 +33,14 @@ module Sidebar
              prefix: Component.text("Best Streak").color(NamedTextColor::RED),
              score_position: 2)
 
+    board.register_new_objective(Score::PLAYER_HEALTH, Criteria::HEALTH, Component.text("\u2764").color(NamedTextColor::RED))
+    health_objective = board.get_objective(Score::PLAYER_HEALTH)
+    health_objective.set_display_slot(DisplaySlot::BELOW_NAME)
+
+    display_style = Style.style.color(NamedTextColor::RED).decorate(TextDecoration::BOLD).build
+    number_format = NumberFormat.styled(display_style)
+    health_objective.number_format(number_format)
+
     player.set_scoreboard(board)
   end
 

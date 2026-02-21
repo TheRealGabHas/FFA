@@ -17,6 +17,9 @@ class PlayerJoinListener
   include Listener
 
   def self.handle_rejoin(player)
+    # Create the sidebar containing some statistics (and the health scoreboard)
+    Sidebar.create_sidebar(player)
+
     spawn_location = Location.new(player.get_world, 0.5, 1.0, 5.5, 180, 0)
 
     player.set_respawn_location(spawn_location, true)
@@ -47,8 +50,6 @@ class PlayerJoinListener
     player.set_health(player.get_max_health)
     player.set_food_level(20)
 
-    # Create the sidebar containing some statistics
-    Sidebar.create_sidebar(player)
   end
 
   def self.executor(plugin)
