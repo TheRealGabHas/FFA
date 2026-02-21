@@ -40,6 +40,7 @@ class EntityDamageListener
   def self.handle_entity_damage_by_entity(event)
     victim = event.get_entity
     damager = event.get_damager
+    projectile = nil
 
     if damager.is_a?(Projectile)
       projectile = event.get_damager.copy
@@ -64,6 +65,18 @@ class EntityDamageListener
       $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.get_name} (start of combat)")
       DataStore.start_combat(victim)
       DataStore.start_combat(damager)
+
+      if projectile
+        final_damage = event.get_final_damage.round(1)
+        distance = damager.get_location.distance(victim.get_location).round(1)
+        recap_message = Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
+                                 .append(Component.text("You dealt ").color(NamedTextColor::GRAY))
+                                 .append(Component.text("#{final_damage} ").color(NamedTextColor::RED))
+                                 .append(Component.text("damage from ").color(NamedTextColor::GRAY))
+                                 .append(Component.text("#{distance} ").color(NamedTextColor::RED))
+                                 .append(Component.text("blocks").color(NamedTextColor::GRAY))
+        damager.send_message(recap_message)
+      end
     elsif victim.is_a?(Player) && !damager.is_a?(Player)
       $plugin.get_logger.info("#{victim.get_name} has been damaged by #{damager.class} (no combat started)")
     end
