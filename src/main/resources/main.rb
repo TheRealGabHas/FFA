@@ -30,7 +30,7 @@ def load_ruby_file(path)
   $plugin.get_logger.info("Loaded #{path} in #{Time.now - start}s (#{content_bytes.length} bytes)")
 end
 
-FILES = %w[utils/Utils.rb utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb
+FILES = %w[utils/Utils.rb utils/DataStore.rb utils/Scores.rb utils/ItemBuilder.rb utils/Kits.rb utils/Sidebar.rb
           listeners/PlayerJoinListener.rb listeners/PlayerQuitListener.rb listeners/BlockBreakListener.rb
           commands/KitSelector.rb commands/SpawnCommand.rb
           listeners/KitInventoryListener.rb listeners/DropItemListener.rb
@@ -73,3 +73,11 @@ end
 # Every 5 ticks (0.25 sec), updates the combat state of each player
 combat_update_task = Runnable.impl { DataStore.update_combat_states }
 Bukkit.get_scheduler.run_task_timer($plugin, combat_update_task, 0, 5)
+
+# Every 20 ticks (1 sec), updates the sidebar view
+sidebar_update_task = Runnable.impl {
+  Bukkit.get_online_players.each do |player|
+    Sidebar.update_sidebar(player)
+  end
+}
+Bukkit.get_scheduler.run_task_timer($plugin, sidebar_update_task, 20, 20)

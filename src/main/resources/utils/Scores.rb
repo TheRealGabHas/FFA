@@ -18,6 +18,7 @@ module Score
   IN_COMBAT = "inCombat"
   LIFETIME_KILL_COUNT = "lifetimeKillCount"
   STREAK_KILL_COUNT = "streakKillCount"
+  BEST_KILLSTREAK = "bestKillstreak"
   PLAYER_HEALTH = "playerHealth"
   DEATH_COUNT = "deathCount"
 
@@ -49,6 +50,9 @@ module Score
     end
     if scoreboard.get_objective(Score::DEATH_COUNT).nil?
       scoreboard.register_new_objective(Score::DEATH_COUNT, Criteria::DEATH_COUNT, Score::DEATH_COUNT)
+    end
+    if scoreboard.get_objective(Score::BEST_KILLSTREAK).nil?
+      scoreboard.register_new_objective(Score::BEST_KILLSTREAK, Criteria::DUMMY, Score::BEST_KILLSTREAK)
     end
   end
 

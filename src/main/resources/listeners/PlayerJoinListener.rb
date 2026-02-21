@@ -47,6 +47,8 @@ class PlayerJoinListener
     player.set_health(player.get_max_health)
     player.set_food_level(20)
 
+    # Create the sidebar containing some statistics
+    Sidebar.create_sidebar(player)
   end
 
   def self.executor(plugin)

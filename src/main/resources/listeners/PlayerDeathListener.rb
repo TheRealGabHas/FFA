@@ -55,6 +55,10 @@ class PlayerDeathListener
       dead_player.send_message(Component.text("[gFFA] ").color(NamedTextColor::YELLOW)
                                         .append(Component.text("You reached a killstreak of ").color(NamedTextColor::GRAY))
                                         .append(Component.text(killstreak).color(NamedTextColor::AQUA)))
+      # Register a new best killstreak
+      if killstreak > Score.get_player_score(dead_player, Score::BEST_KILLSTREAK)
+        Score.set_player_score(dead_player, Score::BEST_KILLSTREAK, killstreak)
+      end
     end
     Score.set_player_score(dead_player, Score::STREAK_KILL_COUNT, 0)
   end
