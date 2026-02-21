@@ -106,8 +106,8 @@ module Kits
     chestplate  = ItemBuilder.build_item(material: Material::CHAINMAIL_CHESTPLATE, unbreakable: true)
     leggings    = ItemBuilder.build_item(material: Material::CHAINMAIL_LEGGINGS, unbreakable: true)
     boots       = ItemBuilder.build_item(material: Material::CHAINMAIL_BOOTS, unbreakable: true)
-    sword       = ItemBuilder.build_item(material: Material::WOODEN_SWORD, unbreakable: true, enchants: [[Enchantment::KNOCKBACK, 1]])
-    bow         = ItemBuilder.build_item(material: Material::BOW, unbreakable: true, enchants: [[Enchantment::POWER, 2], [Enchantment::INFINITY, 1]])
+    sword       = ItemBuilder.build_item(material: Material::WOODEN_SWORD, unbreakable: true, enchants: [[Enchantment::KNOCKBACK, 2]])
+    bow         = ItemBuilder.build_item(material: Material::BOW, unbreakable: true, enchants: [[Enchantment::POWER, 1], [Enchantment::INFINITY, 1]])
     arrow       = ItemBuilder.build_item(material: Material::ARROW, quantity: 2)
     food        = ItemBuilder.build_item(material: Material::COOKED_BEEF, quantity: 32)
 
@@ -168,7 +168,7 @@ module Kits
 
     # Invisibility particles are enabled
     invisibility_effect = PotionEffect.new(PotionEffectType::INVISIBILITY, -1, 0, false, true, true)
-    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 1, false, false, true)
+    speed_effect = PotionEffect.new(PotionEffectType::SPEED, -1, 0, false, false, true)
     player.add_potion_effect(invisibility_effect)
     player.add_potion_effect(speed_effect)
   end
