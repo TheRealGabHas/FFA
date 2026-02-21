@@ -102,12 +102,12 @@ module Kits
   end
 
   def self.equip_archer_kit(player)
-    helmet      = ItemBuilder.build_item(material: Material::IRON_HELMET, unbreakable: true)
+    helmet      = ItemBuilder.build_item(material: Material::LEATHER_HELMET, unbreakable: true)
     chestplate  = ItemBuilder.build_item(material: Material::CHAINMAIL_CHESTPLATE, unbreakable: true)
     leggings    = ItemBuilder.build_item(material: Material::CHAINMAIL_LEGGINGS, unbreakable: true)
-    boots       = ItemBuilder.build_item(material: Material::CHAINMAIL_BOOTS, unbreakable: true)
+    boots       = ItemBuilder.build_item(material: Material::LEATHER_BOOTS, unbreakable: true)
     sword       = ItemBuilder.build_item(material: Material::WOODEN_SWORD, unbreakable: true, enchants: [[Enchantment::KNOCKBACK, 2]])
-    bow         = ItemBuilder.build_item(material: Material::BOW, unbreakable: true, enchants: [[Enchantment::POWER, 1], [Enchantment::INFINITY, 1]])
+    bow         = ItemBuilder.build_item(material: Material::BOW, unbreakable: true, enchants: [[Enchantment::INFINITY, 1]])
     arrow       = ItemBuilder.build_item(material: Material::ARROW, quantity: 2)
     food        = ItemBuilder.build_item(material: Material::COOKED_BEEF, quantity: 32)
 
