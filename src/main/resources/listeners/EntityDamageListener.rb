@@ -82,12 +82,18 @@ class EntityDamageListener
     end
   end
 
-  def self.executor(plugin)
+  def self.damage_executor(plugin)
+    EventExecutor.impl do |_method, _listener, event|
+      if event.is_a?(EntityDamageEvent)
+        self.handle_entity_damage(event)
+      end
+    end
+  end
+
+  def self.damage_by_entity_executor(plugin)
     EventExecutor.impl do |_method, _listener, event|
       if event.is_a?(EntityDamageByEntityEvent)
         self.handle_entity_damage_by_entity(event)
-      elsif event.is_a?(EntityDamageEvent)
-        self.handle_entity_damage(event)
       end
     end
   end
